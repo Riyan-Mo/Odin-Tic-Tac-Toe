@@ -1,0 +1,20 @@
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  border: 2px solid slategrey;
+}
+
+#gameBoard button {
+  width: calc(20px + 18vh);
+  height: calc(20px + 18vh);
+  font-size: 4rem;
+  border: 2px solid slategray;
+}
+
+@media only screen and (max-width: 400px) {
+  .gameBoard button {
+    width: calc(20px + 18vw);
+    height: calc(20px + 18vw);
+  }
+}
