@@ -6,14 +6,14 @@
 }
 
 #gameBoard button {
-  width: calc(20px + 18vh);
-  height: calc(20px + 18vh);
+  width: calc(20px + 10vw);
+  height: calc(20px + 10vw);
   font-size: 4rem;
   border: 2px solid slategray;
 }
 
-@media only screen and (max-width: 400px) {
-  .gameBoard button {
+@media only screen and (max-width: 600px) {
+  #gameBoard button {
     width: calc(20px + 18vw);
     height: calc(20px + 18vw);
   }

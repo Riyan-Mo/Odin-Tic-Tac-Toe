@@ -1,62 +1,101 @@
-const Player = function(symbol, isTurn){
-  return { symbol, isTurn };
-}
-function setId(){
-  let index = 0;
-  const gameBoard = document.querySelector("#gameBoard");
-  Array.from(gameBoard.children).forEach(element => {
-    element.setAttribute('id', index);
-    index++;
-  });
-}  
+const createPlayer = (symbol, isTurn) => ({
+  symbol,
+  isTurn
+});
 
-let Game = (function(){  
-  let player1 = new Player("X", true);
-  let player2 = new Player("O", false);
+const createGame = () => {
+  let player1 = createPlayer("X", true);
+  let player2 = createPlayer("O", false);
   let initialBoard = ["", "", "", "", "", "", "", "", ""];
   const gameBoard = document.querySelector("#gameBoard");
-  for(let i=0 ; i<9;i++){
-    const tile = document.createElement('button');
-    tile.addEventListener('click', function(){
-      toDisplay(player1, player2, tile, initialBoard);
-    })
-    gameBoard.append(tile);
+  
+  const setId = () => {
+    let index = 0;
+    Array.from(gameBoard.children).forEach(element => {
+      element.setAttribute('id', index);
+      index++;
+    });
   };
 
-})();
-setId();
+  const toDisplay = (p1, p2, piece, board) => {
+    pyTurn = playerTurn(p1, p2);
+    piece.textContent = pyTurn;
+    board[piece.getAttribute('id')] = pyTurn;
+    console.log(board);
+    piece.disabled = true;
+    checkDraw();
+    checkWin(p1, p2, board);
+  };
 
-function toDisplay(p1, p2, piece, board){
-  pyTurn = playerTurn(p1, p2);
-  piece.textContent = pyTurn;
-  board[piece.getAttribute('id')] = pyTurn;
-  console.log(board);
-  piece.disabled = true;
-}
+  const playerTurn = (one, two) => {
+    return one.isTurn ? changeTurn(one, two) : changeTurn(two, one);
+  };
 
+  const changeTurn = (player1, player2) => {
+    const turnPara = document.querySelector("#turnPara");
+    player1.isTurn = false;
+    player2.isTurn = true;
+    turnPara.textContent = player2.symbol + "'s turn!";
+    return player1.symbol;
+  };
 
-function playerTurn(one, two){
-  return one.isTurn?changeTurn(one, two): changeTurn(two, one);
-}
+  const checkWin = (one, two, board) => {
+    const win = [
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
 
-function changeTurn(player1, player2){
-  const turnPara = document.querySelector("#turnPara");
-  player1.isTurn = false;
-  player2.isTurn = true;
-  turnPara.textContent = player2.symbol+"'s turn!";
-  return player1.symbol;
-}
+    for (let i = 0; i < win.length; i++) {
+      let a = win[i][0];
+      let b = win[i][1];
+      let c = win[i][2];
+      symbolCheck(a, b, c, one.symbol, board);
+      symbolCheck(a, b, c, two.symbol, board);
+    }
+  };
 
-function CheckWin(one, two, board){
-  const win = [
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  
-}
+  const symbolCheck = (one, two, three, symbol, board) => {
+    if (board[one] === symbol && board[two] === symbol && board[three] === symbol) {
+      declareWinner(symbol);
+    }
+  };
+
+  const declareWinner = (winner) => {
+    const para = document.querySelector("#turnPara");
+    para.textContent = `${winner} won!`;
+    Array.from(gameBoard.children).forEach(element => {
+      element.disabled = true;
+    });
+  };
+
+  const checkDraw = () => {
+    const para = document.querySelector("#turnPara");
+    let filled = true;
+    Array.from(gameBoard.children).forEach(element => {
+      if (element.textContent === "") {
+        filled = false;
+      }
+    });
+    if (filled) {
+      para.textContent = "It's a draw!";
+    }
+  };
+
+  for (let i = 0; i < 9; i++) {
+    const tile = document.createElement('button');
+    tile.addEventListener('click', function () {
+      toDisplay(player1, player2, tile, initialBoard);
+    });
+    gameBoard.append(tile);
+  }
+
+  setId();
+};
+
+createGame();
