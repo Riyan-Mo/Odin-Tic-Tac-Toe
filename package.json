@@ -1,0 +1,22 @@
+{
+  "name": "odin-tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic-Tac-Toe game made as part of The Odin Project",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Riyan911/Odin-Tic-Tac-Toe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Riyan911/Odin-Tic-Tac-Toe/issues"
+  },
+  "homepage": "https://github.com/Riyan911/Odin-Tic-Tac-Toe#readme",
+  "devDependencies": {
+    "eslint": "^8.36.0"
+  }
+}

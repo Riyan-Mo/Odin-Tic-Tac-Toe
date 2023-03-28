@@ -19,7 +19,7 @@ const Game = () => {
   };
 
   const toDisplay = (p1, p2, piece, board) => {
-    pyTurn = playerTurn(p1, p2);
+    let pyTurn = playerTurn(p1, p2);
     piece.textContent = pyTurn;
     board[piece.getAttribute('id')] = pyTurn;
     piece.disabled = true;
@@ -95,7 +95,7 @@ const Game = () => {
       toDisplay(player1, player2, tile, initialBoard);
     })
     gameBoard.append(tile);
-  };
+  }
 
   setId();
 };
